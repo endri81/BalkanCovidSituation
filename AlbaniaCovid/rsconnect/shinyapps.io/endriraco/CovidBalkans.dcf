@@ -1,0 +1,13 @@
+name: CovidBalkans
+title: CovidBalkans
+username:
+account: endriraco
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5490059
+bundleId: 5497495
+url: https://endriraco.shinyapps.io/CovidBalkans/
+when: 1642891427.32505
+lastSyncTime: 1642891427.32505
+asMultiple: FALSE
+asStatic: FALSE

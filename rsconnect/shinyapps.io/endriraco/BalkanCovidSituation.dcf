@@ -1,0 +1,13 @@
+name: BalkanCovidSituation
+title: BalkanCovidSituation
+username:
+account: endriraco
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5508573
+bundleId: 5507182
+url: https://endriraco.shinyapps.io/BalkanCovidSituation/
+when: 1643134107.2353
+lastSyncTime: 1643134107.2353
+asMultiple: FALSE
+asStatic: FALSE
