@@ -29,4 +29,17 @@ mostdeath <-g7_nots %>% group_by(country)  %>%
   filter(mostdeath == max(mostdeath)) %>% 
   select(country, mostdeath) %>%
   mutate_if(is.numeric, round,2)
+
+
+deaths <-g7_nots %>% group_by(country)  %>% 
+  summarise(mostdeath = sum(deaths_new))  %>% 
+  mutate(population = population) %>%
+  mutate(mostdeathpop = mostdeath/population)  %>%
+  mutate_if(is.numeric, round,2)
+
+
+cases <- g7_nots1[c(1:11) , ] %>% 
+  select(country, cases_new) %>%
+  mutate_if(is.numeric, round,2)
+
   

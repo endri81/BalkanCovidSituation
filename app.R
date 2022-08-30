@@ -47,8 +47,14 @@ shinyApp(
         box(plotlyOutput("plot2"))
       ),
       fluidRow(
-        box(DT::dataTableOutput("mytable")),
+        box(
+          radioButtons(inputId = "plot_type" , label = "Compare Balkan countries by:", choices = c("Cases", "Deaths" )),
+          plotlyOutput("myplot")
+        ),
         box(leafletOutput('myMap'))
+      ),
+      fluidRow(
+        DT::dataTableOutput("mytable")
       )
       
     ),
@@ -71,7 +77,7 @@ shinyApp(
     
     output$dailydeaths = renderInfoBox({
       infoBox(
-        title = "Largest number of daily deaths per milion",
+        title = "Largest number of daily fatalities per milion",
         value = deathpermilion[1,],
         icon = icon("bar-chart-o"),
         color = "blue"
@@ -80,7 +86,7 @@ shinyApp(
     
     output$dailyinf = renderInfoBox({
       infoBox(
-        title = "Largest number of daily infections per milion",
+        title = "Largest number of daily new cases per milion",
         value = infpermilion[1,],
         icon = icon("bar-chart-o"),
         color = "blue"
@@ -89,7 +95,7 @@ shinyApp(
     
     output$mostdeath = renderInfoBox({
       infoBox(
-        title = "Largest number of deaths per milion since beginning",
+        title = "Largest number of fatalities per milion since beginning",
         value = mostdeath[1,],
         icon = icon("bar-chart-o"),
         color = "blue"
@@ -99,18 +105,13 @@ shinyApp(
     
     
     output$plot1 <- renderPlotly({
-      fig <- plot_ly(g7_nots_plot1(), type = 'scatter', color = ~ factor(country), mode = 'lines')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Slovenia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Albania')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Croatia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Serbia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Bosnia and Herzegovina')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Montenegro')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Macedonia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Greece')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Bulgaria')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Romania')%>%
-        layout(title = 'Daily deaths from Covid19 in Balkan Countries since the beginning of pandemic',legend=list(title=list(text='Country')),
+      fig <- plot_ly(g7_nots_plot1(), 
+                     x = ~date, 
+                     y = ~deaths_new,
+                     type = "scatter",
+                     mode = "lines+markers", 
+                     color = ~ factor(country))%>%
+        layout(title = 'Daily fatalities from Covid19 in Balkan Countries since the beginning of pandemic',legend=list(title=list(text='Country')),
                xaxis = list(dtick = "M1"))
       options(warn = -1)
       fig <- fig %>%
@@ -132,18 +133,13 @@ shinyApp(
     })
     
     output$plot2 <- renderPlotly({
-      fig <- plot_ly(g7_nots_plot2(), type = 'scatter', mode = 'lines', color = ~ factor(country))%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Slovenia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Albania')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Croatia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Serbia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Bosnia and Herzegovina')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Montenegro')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Macedonia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Greece')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Bulgaria')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Romania')%>%
-        layout(title = 'Daily infections from Covid19 in Balkan Countries since the beginning of pandemic',legend=list(title=list(text='Country')),
+      fig <- plot_ly(g7_nots_plot2(), 
+                     x = ~date, 
+                     y = ~cases_new,
+                     type = "scatter",
+                     mode = "lines+markers", 
+                     color = ~ factor(country))%>%
+        layout(title = 'Daily new cases from Covid19 in Balkan Countries since the beginning of pandemic',legend=list(title=list(text='Country')),
                xaxis = list(dtick = "M1"))
       options(warn = -1)
       fig <- fig %>%
@@ -166,18 +162,13 @@ shinyApp(
     })
     
     output$plot3 <- renderPlotly({
-      fig <- plot_ly(g7_nots_plot3(), type = 'scatter', mode = 'lines+markers', color = ~ factor(country))%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Slovenia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Albania')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Croatia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Serbia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Bosnia and Herzegovina')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Montenegro')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Macedonia')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Greece')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Bulgaria')%>%
-        add_trace(x = ~date, y = ~cases_new, country = 'Romania')%>%
-        layout(title = 'Daily infections from Covid19 in Balkan Countries during 2022',legend=list(title=list(text='Country')),
+      fig <- plot_ly(g7_nots_plot3(), 
+                     x = ~date, 
+                     y = ~cases_new,
+                     type = "scatter",
+                     mode = "lines+markers", 
+                     color = ~ factor(country))%>%
+        layout(title = 'Daily new cases from Covid19 in Balkan Countries during 2022',legend=list(title=list(text='Country')),
                xaxis = list(dtick = "M1"))
       options(warn = -1)
       fig <- fig %>%
@@ -200,18 +191,13 @@ shinyApp(
     })
     
     output$plot4 <- renderPlotly({
-      fig <- plot_ly(g7_nots_plot4(), type = 'scatter', mode = 'lines+markers', color = ~ factor(country))%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Slovenia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Albania')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Croatia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Serbia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Bosnia and Herzegovina')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Montenegro')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Macedonia')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Greece')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Bulgaria')%>%
-        add_trace(x = ~date, y = ~deaths_new, country = 'Romania')%>%
-        layout(title = 'Daily deaths from Covid19 in Balkan Countries during 2022',legend=list(title=list(text='Country')),
+      fig <- plot_ly(g7_nots_plot4(), 
+                     x = ~date, 
+                     y = ~deaths_new,
+                     type = "scatter",
+                     mode = "lines+markers", 
+                     color = ~ factor(country))%>%
+        layout(title = 'Daily fatalities from Covid19 in Balkan Countries during 2022',legend=list(title=list(text='Country')),
                xaxis = list(dtick = "M1"))
       options(warn = -1)
       fig <- fig %>%
@@ -256,8 +242,48 @@ shinyApp(
     output$mytable <- DT::renderDataTable(g7_nots1,
                                           options = list(scrollX = TRUE),
                                           rownames = FALSE)
-  }
-  
 
   
-)
+  output$myplot <- renderPlotly({
+    
+    if (input$plot_type == "Cases") {
+      fig <- plot_ly(cases, 
+                     x = ~cases_new, 
+                     y = ~country,
+                     type = "bar",
+                     color = ~ factor(country))%>%
+        layout(title = 'Comparision of daily new cases',legend=list(title=list(text='Country')))
+      options(warn = -1)
+      fig <- fig %>%
+        layout(
+          xaxis = list(
+            title=''),
+          yaxis = list(
+            title=''),
+          plot_bgcolor='#e5ecf6')
+      
+      fig
+    } 
+    else if (input$plot_type == "Deaths") {
+      fig <- plot_ly(deaths, 
+                     x = ~mostdeath, 
+                     y = ~country,
+                     type = "bar",
+                     color = ~ factor(country))%>%
+        layout(title = 'Comparision of daily fatalities',legend=list(title=list(text='Country')),
+               xaxis = list(dtick = "M1"))
+      options(warn = -1)
+      fig <- fig %>%
+        layout(
+          xaxis = list(
+            title=''),
+          yaxis = list(
+            title=''),
+          plot_bgcolor='#e5ecf6')
+      
+      fig
+      }
+  })
+
+  }
+  )
