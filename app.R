@@ -266,12 +266,11 @@ shinyApp(
     } 
     else if (input$plot_type == "Deaths") {
       fig <- plot_ly(deaths, 
-                     x = ~mostdeath, 
+                     x = ~mostdeathpop, 
                      y = ~country,
                      type = "bar",
                      color = ~ factor(country))%>%
-        layout(title = 'Comparision of daily fatalities',legend=list(title=list(text='Country')),
-               xaxis = list(dtick = "M1"))
+        layout(title = 'Comparision of daily fatalities',legend=list(title=list(text='Country')))
       options(warn = -1)
       fig <- fig %>%
         layout(
